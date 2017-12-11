@@ -1,0 +1,36 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "8.1.1",
+    "npm": "5.0.3"
+  },
+  "scripts": {
+    "start": "forever index.js",
+    "server": "nodemon index.js",
+    "dev": "npm run server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.0",
+    "body-parser": "^1.17.2",
+    "cookie-session": "^2.0.0-beta.2",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.7",
+    "express": "^4.15.3",
+    "forever": "^0.15.3",
+    "fs": "0.0.1-security",
+    "mongoose": "^4.11.1",
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
+    "passport-steam": "^1.0.8",
+    "steam-inventory-api": "^2.0.9",
+    "steam-market-manager": "^1.0.8",
+    "steam-market-pricing": "^1.0.4"
+  }
+}

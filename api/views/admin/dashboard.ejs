@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>GoTrust | Admin Panel </title>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/admin/custom.min.css" rel="stylesheet">
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <img src="<%= user.image %>" alt="..." class="img-circle profile_img">
+              </div>
+              <div class="profile_info">
+                <span>Welcome,</span>
+                <h2><%= user.name %></h2>
+              </div>
+            </div>
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>General</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-user-circle"></i> Users <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="users">New Users</a></li>
+                      <li><a href="topusers">Top Users</a></li>
+
+                    </ul>
+                  </li>
+
+                </ul>
+              </div>
+              <div class="menu_section">
+                <h3>Add New</h3>
+                <ul class="nav side-menu">
+                  <li><a href="addplayer"><i class="fa fa-plus"></i> Add New</a></li>
+              </div>
+            </div>
+            <!-- /sidebar menu -->
+
+          </div>
+        </div>
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Newly Created <small>Users</small></h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>FacebookID</th>
+                          <th>Status</th>
+                          <th>Rep</th>
+                          <th>Time Added</th>
+                          <th>Edit</th>
+                        </tr>
+                      </thead>
+
+
+                      <tbody>
+                        <% for(var i = 0; i < users.length; i++) { %>
+                        <tr>
+                          <td><%= users[i].name %></td>
+                          <td><a href="https://www.facebook.com/app_scoped_user_id/<%= users[i].loginId %>" target="_blank"><%= users[i].loginId %></a></td>
+                          <td><%= users[i].status %></td>
+                          <td><%= users[i].rep %></td>
+                          <td><%= users[i].timestamp %></td>
+                          <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal<%= users[i]._id %>">Edit</button></td>
+                        </tr>
+
+                        <div id="myModal<%= users[i]._id %>" class="modal fade" role="dialog">
+                              <div class="modal-dialog">
+
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <h4 class="modal-title">Modal Header</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <form action="/admin/accept/<%= users[i]._id %>" method="post">
+                                      <div class="col-lg-12">
+                                        <div class="form-group">
+                                          <label>Name:</label>
+                                          <input type="text" class="form-control" value="<%= users[i].name %>" name="name">
+                                        </div>
+                                      </div>
+                                      <div class="col-lg-12">
+                                        <div class="form-group">
+                                          <label>Image:</label>
+                                          <input type="text" class="form-control" value="<%= users[i].image %>" name="image">
+                                        </div>
+                                      </div>
+                                      <div class="col-lg-12">
+                                        <div class="form-group">
+                                          <label>Current Status: <%= users[i].status %></label>
+                                          <select class="form-control" name="status">
+                                            <option value="<%= users[i].status %>">Current: <%= users[i].status %></option>
+                                            <option value="pending">Pending</option>
+                                            <option value="member">Member</option>
+                                            <option value="verified">Verified</option>
+                                            <option value="unverified">Unverified</option>
+                                            <option value="rejected">Reject</option>
+                                            <option value="banned">Ban</option>
+
+                                          </select>
+                                        </div>
+
+                                      </div>
+                                      <div class="col-lg-12">
+                                        <div class="form-group">
+                                          <label>Role:</label>
+                                          <input type="text" class="form-control" value="<%= users[i].role %>" name="role">
+                                        </div>
+                                      </div>
+                                      <div class="col-lg-12">
+                                          <div class="form-group">
+                                            <label>FacebookID:</label>
+                                            <input type="text" class="form-control" value="<%= users[i].facebookId %>" name="facebookId">
+                                          </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                          <div class="form-group">
+                                            <label>FacebookName:</label>
+                                            <input type="text" class="form-control" value="<%= users[i].facebookName %>" name="facebookName">
+                                          </div>
+                                        </div>
+
+                                      <div class="col-lg-12">
+                                          <div class="form-group">
+                                            <label>SteamId:</label>
+                                            <input type="text" class="form-control" value="<%= users[i].steamId %>" name="steamId">
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-12">
+                                          <div class="form-group">
+                                            <label>SteamName:</label>
+                                            <input type="text" class="form-control" value="<%= users[i].steamName %>" name="steamName">
+                                          </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                          <div class="form-group">
+                                            <label>Deposit:</label>
+                                            <input type="text" class="form-control" value="<%= users[i].deposit %>" name="deposit">
+                                          </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                          <div class="form-group">
+                                            <label>Rep:</label>
+                                            <input type="text" class="form-control" value="<%= users[i].rep %>" name="rep">
+                                          </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                          <div class="form-group">
+                                            <label>Aktiv Bruger: <%= users[i].isActive %></label>
+                                            <select class="form-control" name="isActive">
+                                              <option value="<%= users[i].isActive %>">Current: <%= users[i].isActive %></option>
+                                              <option value="false">Nej</option>
+                                              <option value="true">Ja</option>
+                                            </select>
+                                          </div>
+                                          </div>
+                                        <div class="col-lg-12">
+                                          <div class="form-group">
+                                            <label>Er MM: <%= users[i].isMM %></label>
+                                            <select class="form-control" name="isMM">
+                                              <option value="<%= users[i].isMM %>">Current: <%= users[i].isMM %></option>
+                                              <option value="false">Nej</option>
+                                              <option value="true">Ja</option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                      </div>
+                                          <p>
+                                            <button type="submit" class="btn btn-primary">Accept</button>
+                                          </p>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+
+                              </div>
+
+
+                      <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+
+          </div>
+          </div>
+        </div>
+        <!-- /page content -->
+
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <script src="/assets/admin/custom.min.js"></script>
+
+  </body>
+</html>
